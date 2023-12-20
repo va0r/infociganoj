@@ -1,6 +1,7 @@
 import random
 
 from django.core.management.base import BaseCommand
+from django.db import connections
 from django.utils import timezone
 
 from courses.models.course import Course, CourseSubscription
@@ -13,6 +14,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         self.stdout.write(self.style.SUCCESS('Starting data population...'))
+
+        # Reset sequence for each table to 1
+        with connections['default'].cursor() as cursor:
+            cursor.execute("SELECT setval(pg_get_serial_sequence('courses_course', 'id'), 1, false)")
+            cursor.execute("SELECT setval(pg_get_serial_sequence('courses_lesson', 'id'), 1, false)")
+            cursor.execute("SELECT setval(pg_get_serial_sequence('payment_payment', 'id'), 1, false)")
+            cursor.execute("SELECT setval(pg_get_serial_sequence('courses_lesson_courses', 'id'), 1, false)")
+            cursor.execute("SELECT setval(pg_get_serial_sequence('courses_coursesubscription', 'id'), 1, false)")
 
         # Create courses with custom names
         course_data = [
