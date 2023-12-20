@@ -6,6 +6,8 @@ omit =
     */*/admin.py
     */*/apps.py
     */*/tests.py
+    */*/tasks.py
+    */*/services.py
     */*/urls.py
     dump.py
     load.py

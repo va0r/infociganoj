@@ -22,8 +22,8 @@ class Course(models.Model):
 
 class CourseSubscription(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='is_active')
-    user = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True, related_name='subscriptions')
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, related_name='curs_subsections')
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True, related_name='user')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, related_name='course')
     subscribed_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
