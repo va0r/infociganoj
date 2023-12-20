@@ -3,12 +3,12 @@ from rest_framework import viewsets, generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from courses.models.course import Course, CourseSubscription
 from courses.models.lesson import Lesson
 from courses.permissions import IsOwner, IsModerator
 from courses.serializer.course import CourseSerializer, CourseSubscriptionSerializer
 from courses.serializer.lesson import LessonSerializer
-
 from .tasks import send_subscription_notification, send_unsubscription_notification, send_course_update_notification
 
 

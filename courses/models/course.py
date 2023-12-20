@@ -1,6 +1,7 @@
-from constants import NULLABLE
 from django.db import models
 from django.utils import timezone
+
+from constants import NULLABLE
 
 
 class Course(models.Model):

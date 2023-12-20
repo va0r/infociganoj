@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -18,6 +17,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='payment',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='payments', to=settings.AUTH_USER_MODEL, verbose_name='user'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='payments',
+                                    to=settings.AUTH_USER_MODEL, verbose_name='user'),
         ),
     ]

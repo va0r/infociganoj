@@ -1,13 +1,14 @@
 from rest_framework import serializers
 
-from payment.models import Payment
 from courses.models.course import Course
 from courses.models.lesson import Lesson
+from payment.models import Payment
 from users.models import User
 
 
 class PaymentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
+
     # user = serializers.HiddenField(
     #     default=serializers.CurrentUserDefault()
     # )

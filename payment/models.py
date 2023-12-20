@@ -1,7 +1,8 @@
+from enum import Enum
+
 from django.db import models
 
 from constants import NULLABLE
-from enum import Enum
 
 
 class PaymentMethod(Enum):

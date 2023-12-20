@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -19,10 +18,13 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('payment_date', models.DateTimeField(auto_now_add=True, null=True, verbose_name='payment_date')),
                 ('payment_amount', models.IntegerField(verbose_name='payment_amount')),
-                ('payment_method', models.CharField(choices=[('CASH', 'Наличные'), ('BANK_TRANSFER', 'Перевод на счет')], max_length=20)),
+                ('payment_method',
+                 models.CharField(choices=[('CASH', 'Наличные'), ('BANK_TRANSFER', 'Перевод на счет')], max_length=20)),
                 ('stripe_id', models.CharField(blank=True, max_length=300, null=True, verbose_name='stripe_id')),
-                ('paid_course', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='courses.course', verbose_name='paid_course')),
-                ('paid_lesson', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='courses.lesson', verbose_name='paid_lesson')),
+                ('paid_course', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                                  to='courses.course', verbose_name='paid_course')),
+                ('paid_lesson', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                                  to='courses.lesson', verbose_name='paid_lesson')),
             ],
             options={
                 'verbose_name': 'Payment',

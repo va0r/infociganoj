@@ -1,5 +1,6 @@
-from constants import NULLABLE
 from django.db import models
+
+from constants import NULLABLE
 from courses.models.course import Course
 
 
