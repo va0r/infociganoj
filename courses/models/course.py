@@ -13,8 +13,7 @@ class Course(models.Model):
     last_updated = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return (f'{self.name}'
-                f'{self.description}')
+        return f'{self.name}: {self.description}'
 
     class Meta:
         verbose_name = 'Course'

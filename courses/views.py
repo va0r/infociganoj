@@ -1,6 +1,6 @@
 from django.utils import timezone
 from rest_framework import viewsets, generics, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -15,7 +15,7 @@ from .tasks import send_subscription_notification, send_unsubscription_notificat
 class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
-    permission_classes = [IsOwner | IsModerator]  # Применяем разрешения
+    permission_classes = [IsOwner | IsModerator | IsAdminUser]  # Применяем разрешения
 
     def perform_update(self, serializer):
         instance = serializer.save()
@@ -38,31 +38,31 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 class LessonCreateAPIView(generics.CreateAPIView):
     serializer_class = LessonSerializer
-    permission_classes = [IsOwner]  # Применяем разрешения
+    permission_classes = [IsOwner | IsAdminUser]  # Применяем разрешения
 
 
 class LessonListAPIView(generics.ListAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsOwner | IsModerator]  # Применяем разрешения
+    permission_classes = [IsOwner | IsModerator | IsAdminUser]  # Применяем разрешения
 
 
 class LessonRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsOwner | IsModerator]  # Применяем разрешения
+    permission_classes = [IsOwner | IsModerator | IsAdminUser]  # Применяем разрешения
 
 
 class LessonUpdateAPIView(generics.UpdateAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsOwner | IsModerator]  # Применяем разрешения
+    permission_classes = [IsOwner | IsModerator | IsAdminUser]  # Применяем разрешения
 
 
 class LessonDestroyAPIView(generics.DestroyAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsOwner]  # Применяем разрешения
+    permission_classes = [IsOwner | IsAdminUser]  # Применяем разрешения
 
 
 class CourseSubscribeAPIView(generics.CreateAPIView):

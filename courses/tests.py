@@ -47,7 +47,6 @@ class LessonTestCase(APITestCase):
         }
         create_lesson = reverse('courses:lesson-create')
         response = self.client.post(create_lesson, data, format='json', **self.headers)
-        print(response.json())
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.json()['name'], data['name'])
