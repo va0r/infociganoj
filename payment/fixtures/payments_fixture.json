@@ -1,0 +1,40 @@
+[
+  {
+        "model": "users.User",
+        "pk": 1,
+        "fields": {
+            "email": "example@example.com",
+            "phone": "1234567890",
+            "city": "Москва"
+        }
+    },
+      {
+        "model": "users.User",
+        "pk": 2,
+        "fields": {
+            "email": "second@example.com",
+            "phone": "9876543210",
+            "city": "Санкт-Петербург"
+        }
+    },
+  {
+    "model": "payment.Payment",
+    "fields": {
+      "user": 1,
+      "payment_date": "2023-09-15T12:00:00Z",
+      "paid_course": 11,
+      "payment_amount": 100,
+      "payment_method": "CASH"
+    }
+  },
+  {
+    "model": "payment.Payment",
+    "fields": {
+      "user": 2,
+      "payment_date": "2023-09-16T13:00:00Z",
+      "paid_lesson": 2,
+      "payment_amount": 10,
+      "payment_method": "BANK_TRANSFER"
+    }
+  }
+]
