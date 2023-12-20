@@ -92,7 +92,8 @@ class CourseSubscribeAPIView(generics.CreateAPIView):
 class CourseUnsubscribeAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, course_id):
+    @staticmethod
+    def delete(request, course_id):
         user = request.user
         # Устанавливаем подписку как неактивную вместо фактического удаления
         subscription = CourseSubscription.objects.filter(course=course_id, user=user).first()
@@ -102,4 +103,4 @@ class CourseUnsubscribeAPIView(APIView):
         # Отправляем уведомление об успешной отписке пользователю
         send_unsubscription_notification.delay(subscription.user.email, subscription.course.name)
 
-        return Response({"detail": "Вы отписаны."}, status=status.HTTP_201_CREATED)
+        return Response({"detail": "Вы отписаны."}, status=status.HTTP_204_NO_CONTENT)

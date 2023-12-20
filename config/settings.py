@@ -1,4 +1,5 @@
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 
@@ -193,3 +194,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL') == 'True'
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True'
+
+# Используйте тестовый брокер в режиме тестирования
+if 'test' in sys.argv:
+    CELERY_BROKER_URL = 'memory://'
