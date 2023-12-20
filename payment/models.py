@@ -20,8 +20,7 @@ class Payment(models.Model):
     stripe_id = models.CharField(max_length=300, verbose_name='stripe_id', **NULLABLE)
 
     def __str__(self):
-        return (f'{self.user}'
-                f'{self.payment_amount}')
+        return f'{self.user}: {self.payment_amount}'
 
     class Meta:
         verbose_name = 'Payment'

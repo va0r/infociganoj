@@ -13,8 +13,7 @@ class Lesson(models.Model):
     owner = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return (f'{self.name}'
-                f'{self.description}')
+        return f'{self.name}: {self.description}'
 
     class Meta:
         verbose_name = 'Lesson'
