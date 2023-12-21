@@ -9,10 +9,6 @@ from users.models import User
 class PaymentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
 
-    # user = serializers.HiddenField(
-    #     default=serializers.CurrentUserDefault()
-    # )
-
     class Meta:
         model = Payment
         fields = '__all__'

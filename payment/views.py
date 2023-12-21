@@ -61,7 +61,8 @@ class PaymentCreateAPIView(generics.CreateAPIView):
 
 
 class PaymentRetrieveAPIView(APIView):
-    def get(self, request, pk):
+    @staticmethod
+    def get(request, pk):
         try:
             payment = get_object_or_404(Payment, pk=pk)
             stripe_id = payment.stripe_id
@@ -74,5 +75,7 @@ class PaymentRetrieveAPIView(APIView):
             else:
                 return Response({"error": "Для этого платежа не существует Stripe ID."},
                                 status=status.HTTP_400_BAD_REQUEST)
-        except Payment.DoesNotExist:
-            return Response({"error": "Платеж не найден"}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            return Response({"error": f"Произошла ошибка: {str(e)}"},
+                            status=status.HTTP_404_NOT_FOUND)

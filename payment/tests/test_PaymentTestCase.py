@@ -4,7 +4,7 @@ from payment.models import Payment, PaymentMethod
 from users.models import User
 
 
-class PaymentStrMethodTest(TestCase):
+class PaymentTestCase(TestCase):
 
     def setUp(self):
         # Create a User instance first
