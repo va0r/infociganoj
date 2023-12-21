@@ -59,10 +59,7 @@ class PaymentCreateAPIView(generics.CreateAPIView):
                 "payment_amount": payment.payment_amount
             }
             return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
-
-        # Проверка на известные методы оплаты
-        if payment_method not in [PaymentMethod.BANK_TRANSFER.name, PaymentMethod.CASH.name]:
-            return Response({"error": "Invalid payment method."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PaymentRetrieveAPIView(APIView):
