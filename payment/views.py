@@ -42,6 +42,7 @@ class PaymentCreateAPIView(generics.CreateAPIView):
         )
 
         headers = self.get_success_headers(serializer.data)
+
         if payment_method == PaymentMethod.BANK_TRANSFER.name:
             response_data = {
                 "stripe_id": payment.stripe_id,
@@ -50,14 +51,18 @@ class PaymentCreateAPIView(generics.CreateAPIView):
                 "payment_amount": payment.payment_amount
             }
             return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
-        elif payment_method == PaymentMethod.CASH.name:
+
+        if payment_method == PaymentMethod.CASH.name:
             response_data = {
                 "id": payment.id,
                 "payment_method": payment.payment_method,
                 "payment_amount": payment.payment_amount
             }
             return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        # Проверка на известные методы оплаты
+        if payment_method not in [PaymentMethod.BANK_TRANSFER.name, PaymentMethod.CASH.name]:
+            return Response({"error": "Invalid payment method."}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PaymentRetrieveAPIView(APIView):

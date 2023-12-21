@@ -73,3 +73,34 @@ class PaymentCreateAPIViewTestCase(TestCase):
         self.assertEqual(response.data['payment_method'], PaymentMethod.BANK_TRANSFER.name)
         self.assertEqual(response.data['payment_amount'], 200)
         self.assertEqual(response.data['stripe_id'], 'stripe123')
+
+    ## =================================================================================================
+
+    @patch('payment.views.PaymentService')
+    def test_create_invalid_payment_method(self, mock_payment_service):
+        # Arrange
+        user = User.objects.create(email='test@example.com')
+        request_data = {
+            "payment_method": "unknown_method",
+            "payment_amount": 100
+        }
+        request = self.factory.post('/payment/', request_data)
+        force_authenticate(request, user=user)
+
+        mock_stripe_handler = MagicMock()
+        mock_stripe_handler.create_and_save_payment.return_value = Payment(
+            id=1,
+            payment_method="unknown_method",
+            payment_amount=100
+        )
+        mock_payment_service.return_value = mock_stripe_handler
+
+        # Act
+        view = PaymentCreateAPIView.as_view()
+        response = view(request)
+
+        # Assert
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('payment_method', response.data)
+        self.assertEqual(str(response.data['payment_method'][0]),
+                         'Значения unknown_method нет среди допустимых вариантов.')

@@ -77,5 +77,3 @@ class CoursesTestCase(APITestCase):
         self.course.refresh_from_db()
         self.assertEqual(self.course.name, updated_course_data['name'])
         self.assertEqual(self.course.description, updated_course_data['description'])
-
-
