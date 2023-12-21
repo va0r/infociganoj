@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('courses', '0002_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
@@ -16,11 +15,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='coursesubscription',
             name='course',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='course', to='courses.course'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='course',
+                                    to='courses.course'),
         ),
         migrations.AlterField(
             model_name='coursesubscription',
             name='user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='user', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='user',
+                                    to=settings.AUTH_USER_MODEL),
         ),
     ]

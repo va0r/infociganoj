@@ -38,7 +38,8 @@ class Command(BaseCommand):
         ]
 
         for course_info in course_data:
-            course = Course.objects.create(name=course_info['name'], description=f'Description for {course_info["name"]}')
+            course = Course.objects.create(name=course_info['name'],
+                                           description=f'Description for {course_info["name"]}')
             self.stdout.write(self.style.SUCCESS(f'Course {course_info["name"]} created'))
 
             # Create lessons for each course
@@ -74,8 +75,10 @@ class Command(BaseCommand):
                         is_active=True,
                         subscribed_at=timezone.now()
                     )
-                    self.stdout.write(self.style.SUCCESS(f'Subscription created for Course {course_info["name"]} and User {user_id}'))
+                    self.stdout.write(
+                        self.style.SUCCESS(f'Subscription created for Course {course_info["name"]} and User {user_id}'))
                 except Exception:
-                    self.stdout.write(self.style.ERROR(f'Subscription failed for Course {course_info["name"]} and User {user_id}'))
+                    self.stdout.write(
+                        self.style.ERROR(f'Subscription failed for Course {course_info["name"]} and User {user_id}'))
 
         self.stdout.write(self.style.SUCCESS('Data population completed successfully!'))
