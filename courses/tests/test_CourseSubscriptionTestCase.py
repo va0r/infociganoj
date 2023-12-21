@@ -1,8 +1,11 @@
+from django.contrib.auth.models import AnonymousUser
+from django.test import RequestFactory
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 from courses.models.course import Course, CourseSubscription
+from courses.serializer.course import CourseSerializer
 from users.models import User
 
 
@@ -52,3 +55,33 @@ class CourseSubscriptionTestCase(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['detail'], "Вы уже подписаны на этот курс.")
+
+    def test_unauthenticated_user_cannot_subscribe(self):
+        """
+        Тест, чтобы проверить, что неавторизованный пользователь не может подписаться на курс
+        """
+        # Очищаем аутентификацию
+        self.client.credentials()
+
+        subscribe_url = reverse('courses:course-subscribe', args=[self.course.id])
+        response = self.client.post(subscribe_url, {}, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertIn("Учетные данные не были предоставлены.", str(response.data['detail']))
+
+    def test_get_is_subscribed_for_anonymous_user(self):
+        """
+        Тест, чтобы проверить, что неавторизованный пользователь не может быть подписан на курс
+        """
+        # Создаем объект Request явно
+        factory = RequestFactory()
+        request = factory.get('/')
+
+        # Удаляем аутентификацию пользователя
+        request.user = AnonymousUser()
+
+        # Создаем новый сериализатор с измененным контекстом
+        serializer_unauthenticated = CourseSerializer(self.course, context={'request': request})
+
+        # Проверяем, что is_subscribed возвращает False для неавторизованного пользователя
+        self.assertFalse(serializer_unauthenticated.data['is_subscribed'])
