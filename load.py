@@ -3,7 +3,7 @@ if __name__ == '__main__':
     from config.settings import INSTALLED_APPS
     import os
 
-    installed_apps = INSTALLED_APPS[10:]
+    installed_apps = INSTALLED_APPS[-3:]
 
     for _ in installed_apps:
 
