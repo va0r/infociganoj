@@ -33,6 +33,9 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
 
+    # 'celery',
+    'django_celery_beat',
+
     'users',
     'courses',
     'payment',

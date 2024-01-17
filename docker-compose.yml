@@ -16,10 +16,13 @@ services:
     image: postgres
     environment:
       - POSTGRES_PASSWORD=ghjcnjq77
+#      - PGDATA=/var/lib/postgresql/14/main
       - PGDATA=/var/lib/postgresql/data/pgdata
+
     env_file:
       - .env
     volumes:
+#      - pg_data:/var/lib/postgresql/14/main
       - pg_data:/var/lib/postgresql/data/pgdata
     ports:
       - '5432:5432'
@@ -36,6 +39,7 @@ services:
                     python3 manage.py loaddata courses_data.json ; \
                     python3 manage.py loaddata payment_data.json ; \
                     python3 manage.py runserver 0.0.0.0:8000"
+#    command: sh -c "python3 manage.py runserver 0.0.0.0:8000"
     ports:
       - '8000:8000'
     volumes:
@@ -52,6 +56,15 @@ services:
     build: .
     tty: true
     command: celery -A config worker -l INFO
+    depends_on:
+      - redis
+      - app
+
+  celery_beat:
+    build: .
+    restart: always
+    tty: true
+    command: celery -A config beat -l INFO -S django
     depends_on:
       - redis
       - app
