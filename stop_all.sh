@@ -2,4 +2,4 @@
 
 sudo service redis stop ;\
 sudo service postgres stop ;\
-:c
+sudo sysctl vm.overcommit_memory=1
